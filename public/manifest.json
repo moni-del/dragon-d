@@ -1,0 +1,21 @@
+{
+  "name": "DT_STORE - أفضل متجر سكنات ألعاب",
+  "short_name": "DT_STORE",
+  "description": "DT_STORE - أفضل متجر لشراء السكنات الحصرية للألعاب",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/logo.webp",
+      "sizes": "any",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["shopping", "games"],
+  "lang": "ar",
+  "dir": "rtl"
+}
