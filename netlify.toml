@@ -4,19 +4,21 @@
 
 [build.environment]
   VITE_DISCORD_CLIENT_ID = "1470099721900265704"
-  VITE_API_BASE_URL = "https://dtdt-f871e.web.app"
-  VITE_DISCORD_REDIRECT_URI = "https://dtdt-f871e.web.app/?callback=true"
-  CLIENT_URL = "https://dtdt-f871e.web.app"
+  VITE_API_BASE_URL = "https://dtdt-f871e.netlify.app"
+  VITE_DISCORD_REDIRECT_URI = "https://dtdt-f871e.netlify.app/?callback=true"
+  CLIENT_URL = "https://dtdt-f871e.netlify.app"
 
 [[redirects]]
   from = "/api/status"
   to = "/api/status.json"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/api/auth/discord/callback"
   to = "/api/auth/discord/callback.json"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/*"
