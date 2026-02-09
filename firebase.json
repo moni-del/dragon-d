@@ -11,16 +11,35 @@
     ],
     "rewrites": [
       {
-        "source": "/api/**",
-        "function": "api"
+        "source": "/api",
+        "destination": "/api/index.html"
       },
       {
-        "source": "/auth/**",
-        "function": "api"
+        "source": "/api/status",
+        "destination": "/api/status.json"
+      },
+      {
+        "source": "/api/auth/discord/callback",
+        "destination": "/api/auth/discord/callback.json"
       },
       {
         "source": "**",
         "destination": "/index.html"
+      }
+    ],
+    "headers": [
+      {
+        "source": "/api/**/*.json",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          }
+        ]
       }
     ]
   }
