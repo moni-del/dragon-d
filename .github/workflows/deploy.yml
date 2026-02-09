@@ -1,0 +1,78 @@
+name: Deploy Server to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Copy environment file
+      run: cp ../.env.production .env
+
+    - name: Build
+      env:
+        DISCORD_CLIENT_ID: ${{ secrets.DISCORD_CLIENT_ID }}
+        DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
+        DISCORD_REDIRECT_URI: https://moni-del.github.io/dragon-d-server/auth/discord/callback
+        DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        DISCORD_GUILD_ID: ${{ secrets.DISCORD_GUILD_ID }}
+        DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
+        SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+        PORT: 3000
+      run: |
+        echo "Building static API server..."
+        mkdir -p dist/api/auth/discord
+        
+        # Create API endpoints as static JSON responses
+        echo '{"status": {"loggedIn": false, "user": null}}' > dist/api/status.json
+        echo '{"callback": {"success": false, "error": "Not implemented"}}' > dist/api/auth/discord/callback.json
+        
+        # Create index.html for GitHub Pages
+        echo '<!DOCTYPE html>' > dist/index.html
+        echo '<html>' >> dist/index.html
+        echo '<head>' >> dist/index.html
+        echo '<title>DT_STORE API</title>' >> dist/index.html
+        echo '<meta charset="utf-8">' >> dist/index.html
+        echo '</head>' >> dist/index.html
+        echo '<body>' >> dist/index.html
+        echo '<h1>DT_STORE API Server</h1>' >> dist/index.html
+        echo '<p>API endpoints:</p>' >> dist/index.html
+        echo '<ul>' >> dist/index.html
+        echo '<li><a href="/api/status.json">/api/status</a></li>' >> dist/index.html
+        echo '<li><a href="/api/auth/discord/callback.json">/api/auth/discord/callback</a></li>' >> dist/index.html
+        echo '</ul>' >> dist/index.html
+        echo '</body>' >> dist/index.html
+        echo '</html>' >> dist/index.html
+
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: './dist'
+
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
