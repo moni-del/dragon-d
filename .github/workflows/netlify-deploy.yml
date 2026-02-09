@@ -1,4 +1,4 @@
-name: Deploy to Firebase Hosting
+name: Deploy to Netlify
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build_and_deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,14 +25,17 @@ jobs:
           VITE_API_BASE_URL: https://dtdt-f871e.web.app
           VITE_DISCORD_REDIRECT_URI: https://dtdt-f871e.web.app/?callback=true
           CLIENT_URL: https://dtdt-f871e.web.app
-        run: |
-          # Copy production environment variables
-          cp .env.production .env
-          npm run build
+        run: npm run build
 
-      - name: Deploy to Firebase
-        uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v3
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_DTDTF871E }}'
-          channelId: live
+          publish-dir: './dist'
+          production-branch: main
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions"
+          enable-pull-request-comment: false
+          enable-commit-comment: false
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
