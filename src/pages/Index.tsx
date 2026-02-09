@@ -10,8 +10,8 @@ type Step = 'login' | 'joinDiscord' | 'store';
 const Index = () => {
   const [step, setStep] = useState<Step>('login');
 
-  // Use same origin (Firebase Hosting domain) by default for API calls
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || window.location.origin;
+  // Use GitHub Pages API URL
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://moni-del.github.io/dragon-d-server';
 
   const checkStatusAndUpdateStep = () => {
     fetch(`${API_BASE_URL}/api/status`, { credentials: 'include' })
