@@ -17,11 +17,11 @@ jobs:
           node-version: '20'
 
       - name: Build
-        run: |
-          echo "VITE_DISCORD_CLIENT_ID=1470099721900265704" >> .env
-          echo "VITE_API_BASE_URL=https://dt-store-api.onrender.com" >> .env
-          echo "CLIENT_URL=https://dtdt-f871e.web.app" >> .env
-          npm run build
+        env:
+          VITE_DISCORD_CLIENT_ID: 1470099721900265704
+          VITE_API_BASE_URL: https://dt-store-api.onrender.com
+          CLIENT_URL: https://dtdt-f871e.web.app
+        run: npm run build
 
       - name: Deploy to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
