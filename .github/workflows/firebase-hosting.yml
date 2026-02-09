@@ -25,7 +25,10 @@ jobs:
           VITE_API_BASE_URL: https://moni-del.github.io/dragon-d-server
           VITE_DISCORD_REDIRECT_URI: https://moni-del.github.io/dragon-d-server/auth/discord/callback
           CLIENT_URL: https://dtdt-f871e.web.app
-        run: npm run build
+        run: |
+          # Copy production environment variables
+          cp .env.production .env
+          npm run build
 
       - name: Deploy to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
