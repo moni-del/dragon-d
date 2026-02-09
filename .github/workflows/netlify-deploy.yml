@@ -22,9 +22,9 @@ jobs:
       - name: Build
         env:
           VITE_DISCORD_CLIENT_ID: '1470099721900265704'
-          VITE_API_BASE_URL: https://dtdt-f871e.web.app
-          VITE_DISCORD_REDIRECT_URI: https://dtdt-f871e.web.app/?callback=true
-          CLIENT_URL: https://dtdt-f871e.web.app
+          VITE_API_BASE_URL: https://dragon-dtt.netlify.app
+          VITE_DISCORD_REDIRECT_URI: https://dragon-dtt.netlify.app/?callback=true
+          CLIENT_URL: https://dragon-dtt.netlify.app
         run: npm run build
 
       - name: Deploy to Netlify
