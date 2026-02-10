@@ -15,20 +15,6 @@ const features = [
 ];
 
 const LoginPage = ({ onLogin }: LoginPageProps) => {
-  const handleDiscordLogin = () => {
-    const clientId = import.meta.env.VITE_DISCORD_CLIENT_ID;
-    const redirectUri = encodeURIComponent(import.meta.env.VITE_DISCORD_REDIRECT_URI || 'http://localhost:3000/auth/discord/callback');
-    const scope = encodeURIComponent('identify guilds');
-
-    if (!clientId) {
-      console.error('VITE_DISCORD_CLIENT_ID is not set');
-      return;
-    }
-
-    const authUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope}`;
-    window.location.href = authUrl;
-  };
-
   return (
     <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 py-10">
       {/* Decorative elements */}
@@ -103,7 +89,7 @@ const LoginPage = ({ onLogin }: LoginPageProps) => {
         transition={{ delay: 1, type: 'spring' }}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        onClick={handleDiscordLogin}
+        onClick={onLogin}
         className="discord-button flex items-center gap-3 rounded-2xl px-12 py-5 text-lg font-bold text-foreground transition-all md:text-xl"
       >
         <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">

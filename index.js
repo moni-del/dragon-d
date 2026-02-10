@@ -1,4 +1,4 @@
-require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.production') });
+require('dotenv').config({ path: require('path').join(__dirname, '.env.local') });
 
 const express = require('express');
 const session = require('express-session');
